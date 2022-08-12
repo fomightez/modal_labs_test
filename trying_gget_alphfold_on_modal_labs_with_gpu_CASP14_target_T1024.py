@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# trying_gget_alphfold_on_modal_labs_with_gpu.py
+# trying_gget_alphfold_on_modal_labs_with_gpu_CASP14_target_T1024.py
 # based on modal_labs_blender_gpu_script.py from https://modal.com/api/raw-examples/blender_video.py
 __author__ = "Wayne Decatur" #fomightez on GitHub
 __license__ = "MIT"
