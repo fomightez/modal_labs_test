@@ -24,7 +24,7 @@ the_commands = [
     "conda install -c conda-forge openmm=7.5.1",
     "pip install gget",
 ]
-stub = modal.Stub(image=modal.Conda().run_commands(the_commands))
+stub = modal.Stub(image=modal.Conda().conda_install(["git"]).run_commands(the_commands))
 
 
 # ## Setting things up in the containers
