@@ -21,7 +21,7 @@ import modal.image
 
 #Need  equivalent of `conda install -c conda-forge openmm=7.5.1`
 the_commands = [
-    "conda install -c conda-forge openmm=7.5.1",
+    "conda install -c conda-forge openmm=7.5.1 --yes",
     "pip install gget",
 ]
 stub = modal.Stub(image=modal.Conda().conda_install(["git"]).run_commands(the_commands))
@@ -48,7 +48,10 @@ if stub.is_inside():
 
 @stub.function(gpu=True)
 def run_alphafold():
-    return gget.alphafold("MAAHKGAEHHHKAAEHHEQAAKHHHAAAEHHEKGEHEQAAHHADTAYAHHKHAEEHAAQAAKHDAEHHAPKPH")
+    p_seq = "MAAHKGAEHHHKAAEHHEQAAKHHHAAAEHHEKGEHEQAAHHADTAYAHHKHAEEHAAQAAKHDAEHHAPKPH" # That
+    # protein sequence is noted in 'gget_alphafold.ipynb' as ' CASP14 target T1024' and links to https://predictioncenter.org/casp14/target.cgi?id=8&view=all . 'gget_alphafold.ipynb' can be
+    # found at https://twitter.com/NeuroLuebbert/status/1556168684799832064
+    gget.alphafold(p_seq)
 
 
 # ## Entrypoint
