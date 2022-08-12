@@ -61,10 +61,19 @@ def run_alphafold():
     # '16 amino acid peptide'
 
     gget.alphafold(p_seq)
+    # Collecting ideas how to get retuls back from remote
+    #import shutil
+    #shutil.make_archive(output_filename, 'zip', dir_name)
+    # https://stackoverflow.com/questions/66432604/python-convert-zip-file-to-bytes-stream
+    # https://stackoverflow.com/questions/2463770/python-in-memory-zip-library
+    # https://www.programcreek.com/python/?CodeExample=zip+file
+    # https://stackoverflow.com/questions/54200941/zipfile-module-for-python3-6-write-to-bytes-instead-of-files-for-odoo
+    # https://stackoverflow.com/a/53880817/8508004 looks to do what I want except at end I'd return `memory_file.getvalue()` and then locally write data back as file with zip extension like in https://modal.com/api/raw-examples/fetch_stock_prices.py
     return os.listdir()
 
 
 # ## Entrypoint
 if __name__ == "__main__":
     with stub.run():
-        run_alphafold()
+        directory_listing = run_alphafold()
+        print(directory_listing)
