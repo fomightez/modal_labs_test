@@ -91,7 +91,7 @@ def run_alphafold():
 
 
 # ## Entrypoint
-OUTPUT_DIR = /tmp/gget_alphafold_results
+OUTPUT_DIR = "/tmp/gget_alphafold_results"
 if __name__ == "__main__":
     with stub.run():
         datetime_stamp, results_zipped_bytes = run_alphafold()
