@@ -8,7 +8,6 @@ __version__ = "0.1.0"
 # ## Basic setup
 
 import os
-import tempfile
 
 import modal
 import modal.image
@@ -72,27 +71,37 @@ def run_alphafold():
     import zipfile
     import glob
     import os
-    memory_file = BytesIO()
-    results_directory = glob.glob('*_gget_alphafold_prediction')[0] # based on 
+    in_memory_zip_buf = BytesIO()
+    results_directory_suffix = '_gget_alphafold_prediction' # based on 
     # https://twitter.com/NeuroLuebbert/status/1557090698003767296
-    results_datetime_stamp = results_directory.split("_gget_alphafold_prediction")[0]
-    with zipfile.ZipFile(memory_file, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    results_directory = glob.glob(f'*{results_directory_suffix}')[0] 
+    results_datetime_stamp = results_directory.split(
+        "results_directory_suffix")[0]
+    with zipfile.ZipFile(in_memory_zip_buf, 'w', zipfile.ZIP_DEFLATED) as zipf:
         for root, dirs, files in os.walk("./"+results_directory, topdown=True):
-            # skipping hidden files based on https://stackoverflow.com/a/13454267/8508004
+            # Skipping hidden files based on 
+            # https://stackoverflow.com/a/13454267/8508004
             files = [f for f in files if not f[0] == '.']
             dirs[:] = [d for d in dirs if not d[0] == '.']
             for file in files:
-                print(f"file in results on remote: {os.path.join(root, file)}")
+                print(f"File in results on remote: {os.path.join(root, file)}")
                 zipf.write(os.path.join(root, file))
             for name in dirs:
-                print(f"directory in results on remote: {os.path.join(root, name)}")
-    memory_file.seek(0)
-    return results_datetime_stamp, memory_file.getvalue()
+                print(f"Directory in results on remote: {os.path.join(
+                    root, name)}")
+    # After all files placed in there, reset the pointer back to beginning of 
+    # the buffer (comment adapted from 
+    # https://stackoverflow.com/a/54202259/8508004).
+    in_memory_zip_buf.seek(0)
+    return results_datetime_stamp, in_memory_zip_buf.getvalue()
+
 
 
 # ## Entrypoint
 OUTPUT_DIR = "/tmp/gget_alphafold_results"
 if __name__ == "__main__":
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
     with stub.run():
         datetime_stamp, results_zipped_bytes = run_alphafold()
         filename = os.path.join(OUTPUT_DIR,  f"{datetime_stamp}_results.zip")
