@@ -61,19 +61,41 @@ def run_alphafold():
     # '16 amino acid peptide'
 
     gget.alphafold(p_seq)
-    # Collecting ideas how to get retuls back from remote
-    #import shutil
-    #shutil.make_archive(output_filename, 'zip', dir_name)
-    # https://stackoverflow.com/questions/66432604/python-convert-zip-file-to-bytes-stream
-    # https://stackoverflow.com/questions/2463770/python-in-memory-zip-library
-    # https://www.programcreek.com/python/?CodeExample=zip+file
-    # https://stackoverflow.com/questions/54200941/zipfile-module-for-python3-6-write-to-bytes-instead-of-files-for-odoo
-    # https://stackoverflow.com/a/53880817/8508004 looks to do what I want except at end I'd return `memory_file.getvalue()` and then locally write data back as file with zip extension like in https://modal.com/api/raw-examples/fetch_stock_prices.py
-    return os.listdir()
+    # Need back the results in the directory *_gget_alphafold_prediction from 
+    # remote (the asterisk is a time date stamp like 
+    # '2022_08_12-1901_gget_alphafold_prediction').
+    # Process will be based on https://modal.com/api/raw-examples/fetch_stock_prices.py
+    # where bytes based back.
+    # Will pass zipped files back by combining that with 
+    # https://stackoverflow.com/a/53880817/8508004
+    from io import BytesIO
+    import zipfile
+    import glob
+    import os
+    memory_file = BytesIO()
+    results_directory = glob.glob('*_gget_alphafold_prediction')[0] # based on 
+    # https://twitter.com/NeuroLuebbert/status/1557090698003767296
+    results_datetime_stamp = results_directory.split("_gget_alphafold_prediction")[0]
+    with zipfile.ZipFile(memory_file, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for root, dirs, files in os.walk("./"+results_directory, topdown=True):
+            # skipping hidden files based on https://stackoverflow.com/a/13454267/8508004
+            files = [f for f in files if not f[0] == '.']
+            dirs[:] = [d for d in dirs if not d[0] == '.']
+            for file in files:
+                print(f"file in results on remote: {os.path.join(root, file)}")
+                zipf.write(os.path.join(root, file))
+            for name in dirs:
+                print(f"directory in results on remote: {os.path.join(root, name)}")
+    memory_file.seek(0)
+    return results_datetime_stamp, memory_file.getvalue()
 
 
 # ## Entrypoint
+OUTPUT_DIR = /tmp/gget_alphafold_results
 if __name__ == "__main__":
     with stub.run():
-        directory_listing = run_alphafold()
-        print(directory_listing)
+        datetime_stamp, results_zipped_bytes = run_alphafold()
+        filename = os.path.join(OUTPUT_DIR,  f"{datetime_stamp}_results.zip")
+        print(f"Saving gget_alphafold results to {filename}")
+        with open(filename, "wb") as f:
+            f.write(results_zipped_bytes)
