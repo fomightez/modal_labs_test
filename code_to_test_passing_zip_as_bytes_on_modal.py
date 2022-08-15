@@ -19,8 +19,9 @@ import modal.image
 
 #Use Modal's pre-built Conda base image, see 
 # https://modal.com/docs/guide/custom-container, so is like where will use this 
-# approach to pass a directory of files back soon
-stub = modal.Stub(image=modal.Conda().conda_install(["pandas"]))
+# approach to pass a directory of files back soon.
+# Add the packages I ended up using to make creating a bunch of files quick.
+stub = modal.Stub(image=modal.Conda().conda_install(["pandas","matplotlib"]))
 
 
 
