@@ -67,10 +67,10 @@ def run_alphafold():
     # where bytes based back.
     # Will pass zipped files back by combining that with 
     # https://stackoverflow.com/a/53880817/8508004
+    import os
     from io import BytesIO
     import zipfile
     import glob
-    import os
     in_memory_zip_buf = BytesIO()
     results_directory_suffix = '_gget_alphafold_prediction' # based on 
     # https://twitter.com/NeuroLuebbert/status/1557090698003767296
