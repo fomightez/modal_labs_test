@@ -56,7 +56,7 @@ def make_files_and_make_zipped_bytes():
     df = pd.DataFrame(list(a_dictionary.items()), columns = ['column1', 'column2']) # BUT IS THIS LIMITED TO TWO COLUMNS SINCE USING KEY-VALUE PAIRS??
     df.to_pickle(os.path.join(results_directory, "file_name3.pkl"))
     df.to_csv(os.path.join(results_directory, "file_name3.tsv"), sep='\t')
-    
+
 
 
     # collect files in the 'results' directory
@@ -93,9 +93,10 @@ def make_files_and_make_zipped_bytes():
 OUTPUT_DIR = "/tmp/test_results"
 if __name__ == "__main__":
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    results_zipped_bytes = make_files_and_make_zipped_bytes()
-    datetime_stamp = "now"
-    filename = os.path.join(OUTPUT_DIR, f"{datetime_stamp}_results.zip")
-    print(f"Saving results to {filename}")
-    with open(filename, "wb") as f:
-        f.write(results_zipped_bytes)
+    with stub.run():
+        results_zipped_bytes = make_files_and_make_zipped_bytes()
+        datetime_stamp = "now"
+        filename = os.path.join(OUTPUT_DIR, f"{datetime_stamp}_results.zip")
+        print(f"Saving results to {filename}")
+        with open(filename, "wb") as f:
+            f.write(results_zipped_bytes)
