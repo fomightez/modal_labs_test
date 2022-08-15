@@ -87,8 +87,10 @@ def run_alphafold():
                 print(f"File in results on remote: {os.path.join(root, file)}")
                 zipf.write(os.path.join(root, file))
             for name in dirs:
-                print(f"Directory in results on remote: {os.path.join(
-                    root, name)}")
+                print(
+                    f"Directory in results on "
+                    "remote: {os.path.join(root, name)}"
+                    )
     # After all files placed in there, reset the pointer back to beginning of 
     # the buffer (comment adapted from 
     # https://stackoverflow.com/a/54202259/8508004).
