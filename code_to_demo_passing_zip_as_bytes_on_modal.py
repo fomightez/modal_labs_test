@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # code_to_demo_passing_zip_as_bytes_on_modal.py
 # Makes some dummy files with content in a directory on remote modal stub run
-#  and then bundles the directory up as zipped and passes back to local machine.
+# and then bundles the directory up as zipped and passes back to local machine.
 # WORKED August 15 2022
 __author__ = "Wayne Decatur"  # fomightez on GitHub
 __license__ = "MIT"
@@ -64,7 +64,12 @@ def make_files_and_make_zipped_bytes():
 
 
 
-    # collect files in the 'results' directory
+    # Collect files in the 'results' directory and pass back to local.
+    ## Process will be based on 
+    # https://modal.com/api/raw-examples/fetch_stock_prices.py
+    # where bytes based back.
+    # Will pass zipped files back by combining that with 
+    # https://stackoverflow.com/a/53880817/8508004
     from io import BytesIO
     import zipfile
     import glob
