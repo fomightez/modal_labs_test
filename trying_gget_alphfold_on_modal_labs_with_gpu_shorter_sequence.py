@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # trying_gget_alphfold_on_modal_labs_with_gpu_shorter_sequence.py
-# based on modal_labs_blender_gpu_script.py from https://modal.com/api/raw-examples/blender_video.py
+# based on modal_labs_blender_gpu_script.py from https://modal.com/api/raw-examples/blender_video.py and https://modal.com/api/raw-examples/fetch_stock_prices.py 
+# for passing data back
 __author__ = "Wayne Decatur" #fomightez on GitHub
 __license__ = "MIT"
 __version__ = "0.1.0"
