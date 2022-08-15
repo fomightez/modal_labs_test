@@ -32,6 +32,7 @@ def make_files_and_make_zipped_bytes():
     # make files in the 'results' directory
     # Doesn't matter what they are, just need a few files with content to test
     # collecting the directory
+    import os
     os.makedirs(results_directory, exist_ok=True)
     import pandas as pd
     import numpy as np
