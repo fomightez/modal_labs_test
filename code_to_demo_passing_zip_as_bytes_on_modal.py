@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-# code_to_test_passing_zip_as_byteson_modal.py
+# code_to_demo_passing_zip_as_bytes_on_modal.py
+# Makes some dummy files with content in a directory on remote modal stub run
+#  and then bundles the directory up as zipped and passes back to local machine.
+# WORKED August 15 2022
 __author__ = "Wayne Decatur"  # fomightez on GitHub
 __license__ = "MIT"
 __version__ = "0.1.0"
