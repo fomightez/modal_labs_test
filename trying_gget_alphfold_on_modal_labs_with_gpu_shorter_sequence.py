@@ -109,7 +109,7 @@ if __name__ == "__main__":
         datetime_stamp, results_zipped_bytes = run_alphafold()
         filename = os.path.join(
             OUTPUT_DIR,  f"zipped_"
-            "{datetime_stamp}{results_directory_suffix}.zip")
+            f"{datetime_stamp}{results_directory_suffix}.zip")
         print(f"Saving gget_alphafold results to {filename}")
         with open(filename, "wb") as f:
             f.write(results_zipped_bytes)
