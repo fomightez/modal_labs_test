@@ -20,11 +20,10 @@ import modal.image
 # and stored them in a Dockerhub image.
 
 #Need  equivalent of `conda install -c conda-forge openmm=7.5.1`
-the_commands = [
-    "conda install -c conda-forge openmm=7.5.1 --yes",
-    "pip install gget",
-]
-stub = modal.Stub(image=modal.Conda().conda_install(["git"]).run_commands(the_commands))
+# Plus need git and for gpu to be accessible suggested to install cuda,
+# see https://gist.github.com/aksh-at/6dc792c9e8002399ea4f386e60bdb025
+stub = modal.Stub(image=modal.Conda().conda_install(["git", "openmm=7.5.1", 
+    "cudatoolkit=11.2", "cudnn=8.1.0"]).pip_install(["gget", "tensorflow"]))
 
 
 # ## Setting things up in the containers
@@ -104,6 +103,8 @@ def run_alphafold():
 OUTPUT_DIR = "/tmp/gget_alphafold_results"
 results_directory_suffix = '_gget_alphafold_prediction'
 if __name__ == "__main__":
+    import tensorflow as tf
+    print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     with stub.run():
