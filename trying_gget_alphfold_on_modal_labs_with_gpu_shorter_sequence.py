@@ -34,6 +34,18 @@ stub = modal.Stub(image=modal.Conda().conda_install(["git", "openmm=7.5.1",
 # locally, but to `True` when imported in the cloud.
 
 if stub.is_inside():
+    # it seems the import of tensorflow has to occur in the `stub.is_inside()`
+    # initially for GPUs to be available. I believe though once it happens, you
+    # can move it to the `@stub.function()` portion and it will still detect 
+    # gpu. However, that probably isn't stable over the long term as probably 
+    # where that happened eventually gets destroyed on their system and probaby 
+    # the reason why in example provided me ,
+    # https://gist.github.com/aksh-at/6dc792c9e8002399ea4f386e60bdb025 , it is
+    # in this portion.
+    # Maybe tensorflow import needs to be here to trigger gpu activation 
+    # behind-the-scenes?
+    import tensorflow as tf
+    print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
     import gget
     gget.setup("alphafold")
 
