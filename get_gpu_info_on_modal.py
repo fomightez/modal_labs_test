@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# trying_to_get_gpu_info_on_modal.py
+# get_gpu_info_on_modal.py
 # Can tensorflow see GPU?
 # based on modal_labs_blender_gpu_script.py from https://modal.com/api/raw-examples/blender_video.py and https://gist.github.com/aksh-at/6dc792c9e8002399ea4f386e60bdb025
 # plus help from meeting Erik at Modal where he provided me with 
