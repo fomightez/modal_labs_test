@@ -33,11 +33,12 @@ stub = modal.Stub(image=modal.Conda().conda_install(["git", "openmm=7.5.1",
 # To do this, we use the `stub.is_inside()` conditional, which will evaluate to `False` when the script runs
 # locally, but to `True` when imported in the cloud.
 # Finding tensorflow import needs to be here to trigger gpu activation 
-# behind-the-scenes (although it seems once it happens once in a recent run, I 
-# can move this to the `@stub.function()` and it coninues to work to allow gpu
-# to work if all fresh???) and and probaby the reason why in example provided 
-# me, https://gist.github.com/aksh-at/6dc792c9e8002399ea4f386e60bdb025 , is
-# in this portion.
+# behind-the-scenes (although it seems once it happens once in a very recent 
+# run, I can move this to the `@stub.function()` and it coninues to work to 
+# allow gpu to work if all fresh??? ==> CONFIRMED IT DOES.) and and probaby the 
+# reason why in example provided me, 
+# https://gist.github.com/aksh-at/6dc792c9e8002399ea4f386e60bdb025 , is in this 
+# portion.
 
 if stub.is_inside():
     import tensorflow as tf
