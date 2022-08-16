@@ -34,6 +34,9 @@ stub = modal.Stub(image=modal.Conda().conda_install(["git", "openmm=7.5.1",
 # locally, but to `True` when imported in the cloud.
 
 if stub.is_inside():
+    import tensorflow as tf
+    print(tf.config.list_physical_devices('GPU'))
+    print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
     import gget
     gget.setup("alphafold")
 
@@ -48,7 +51,7 @@ if stub.is_inside():
 @stub.function(gpu=True)
 def detect_gpu_test():
     import tensorflow as tf
-    print(tf.test.is_gpu_available())
+    print(tf.config.list_physical_devices('GPU'))
     print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 
