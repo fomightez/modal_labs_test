@@ -47,6 +47,8 @@ if stub.is_inside():
 
 @stub.function(gpu=True)
 def run_alphafold():
+    import tensorflow as tf
+    print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
     p_seq = "EMHGPEGLRVGFYESD" # I thought that 'CHRISAVERY 'should work here since 
     # https://twitter.com/qc_punk/status/1460785886421938183 reported a prediction
     # using Alphafold.
@@ -103,8 +105,6 @@ def run_alphafold():
 OUTPUT_DIR = "/tmp/gget_alphafold_results"
 results_directory_suffix = '_gget_alphafold_prediction'
 if __name__ == "__main__":
-    import tensorflow as tf
-    print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     with stub.run():
