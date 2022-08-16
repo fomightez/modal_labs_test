@@ -48,7 +48,7 @@ if stub.is_inside():
 @stub.function(gpu=True)
 def detect_gpu_test():
     import tensorflow as tf
-    print(tensorflow.test.is_gpu_available())
+    print(tf.test.is_gpu_available())
     print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 
